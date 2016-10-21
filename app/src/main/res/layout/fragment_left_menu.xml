@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#252535"
+              android:orientation="vertical">
+
+	<ImageView android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:layout_gravity="center"
+	           android:layout_marginTop="50dp"
+	           android:background="@mipmap/ic_launcher"/>
+	<RadioGroup
+		android:id="@+id/rb_group"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		android:layout_marginTop="50dp"
+		android:orientation="vertical">
+		<RadioButton
+			android:id="@+id/rb_news"
+			style="@style/Bottom_Tab_Style"
+			android:layout_weight="1"
+			android:checked="true"
+			android:drawableTop="@drawable/tab_news_selector"
+			android:text="新闻"/>
+		<RadioButton
+			android:id="@+id/rb_musics"
+			style="@style/Bottom_Tab_Style"
+			android:layout_weight="1"
+			android:drawableTop="@drawable/tab_musics_selector"
+			android:text="音乐 "/>
+		<RadioButton
+			android:id="@+id/rb_movies"
+			style="@style/Bottom_Tab_Style"
+			android:layout_weight="1"
+			android:drawableTop="@drawable/tab_movies_selector"
+			android:text="电影"/>
+		<RadioButton
+			android:id="@+id/rb_pics"
+			style="@style/Bottom_Tab_Style"
+			android:layout_weight="1"
+			android:drawableTop="@drawable/tab_pics_selector"
+			android:text="美图"/>
+
+	</RadioGroup>
+
+</LinearLayout>

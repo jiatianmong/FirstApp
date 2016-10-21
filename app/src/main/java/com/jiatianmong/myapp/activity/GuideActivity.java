@@ -98,7 +98,7 @@ public class GuideActivity extends Activity{
             @Override
             public void onClick(View v) {
                 //更新sp, 已经不是第一次进入了
-                ShaPreUtils.setBoolean(getApplicationContext(), "first_enter_flag", false);
+                ShaPreUtils.setBoolean(getApplicationContext(), "enter_splash_flag", false);
                 //跳到主页面
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
