@@ -30,6 +30,7 @@ public class BasePager {
 
     // 初始化布局
     public View initView() {
+        System.out.println("我是BasePager");
         View view = View.inflate(mActivity, R.layout.base_pager, null);
         tvTitle = (TextView) view.findViewById(R.id.tv_title);
 

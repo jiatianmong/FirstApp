@@ -54,6 +54,7 @@ public class MainActivity extends SlidingFragmentActivity {
 
         mFragmentTransaction.replace(R.id.fl_main, new NewsFragment(), TAG_NEW);
 
+
         mFragmentTransaction.commit();
 
     }
@@ -89,6 +90,9 @@ public class MainActivity extends SlidingFragmentActivity {
         }
 
     }
+
+
+
 
 
 

@@ -3,6 +3,7 @@ package com.jiatianmong.myapp.activity.Fragment;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jiatianmong.myapp.R;
 import com.jiatianmong.myapp.activity.MainActivity;
 
@@ -28,6 +29,7 @@ public class LeftMenuFragment extends BaseFragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 mSelectMenu = checkedId;
+                toggle();
                 showFragment(checkedId);
             }
         });
@@ -42,6 +44,13 @@ public class LeftMenuFragment extends BaseFragment {
         activity.setFragment(checkedId);
     }
 
-
+    /**
+     * 打开或者关闭侧边栏
+     */
+    protected void toggle() {
+        MainActivity mainUI = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+        slidingMenu.toggle();// 如果当前状态是开, 调用后就关; 反之亦然
+    }
 
 }
