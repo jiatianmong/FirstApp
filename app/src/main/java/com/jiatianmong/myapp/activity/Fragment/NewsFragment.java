@@ -22,6 +22,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.viewpagerindicator.TabPageIndicator;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class NewsFragment extends BaseFragment {
     public static ArrayList<String> mNewPagerTitle =new ArrayList<>() ;
     private ArrayList<NewsTabPager> mNewsTabPager;
     private ImageButton mImageButton;
+    private TabPageIndicator mIndicator;
+
 
 
     @Override
@@ -47,6 +50,7 @@ public class NewsFragment extends BaseFragment {
         View view = View.inflate(mActivity, R.layout.fragment_news, null);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_newstabpager);
         mTextView = (TextView) view.findViewById(R.id.tv_title);
+        mIndicator = (TabPageIndicator) view.findViewById(R.id.indicator);
         mImageButton = (ImageButton) view.findViewById(R.id.btn_imagemenu);
         mTextView.setText("News");
         mImageButton.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +88,9 @@ public class NewsFragment extends BaseFragment {
 
         init_PagerAdapte();
 
-    }
+
+}
+
 
     private void init_PagerAdapte() {
         mNewsTabPager = new ArrayList<>();
@@ -93,9 +99,12 @@ public class NewsFragment extends BaseFragment {
             mNewsTabPager.add(mBaseNewTab);
         }
         mViewPager.setAdapter(new NewsTabadapter());
+        //在页签内容加载数据完再绑定，将ViewPager和指示器绑定
+        mIndicator.setViewPager(mViewPager);
     }
-
-
+    /*
+        从服务器获取json数据
+         */
     /*
         从服务器获取json数据
          */
@@ -124,16 +133,14 @@ public class NewsFragment extends BaseFragment {
         });
 
     }
+       class NewsTabadapter extends PagerAdapter {
 
-
-    class NewsTabadapter extends PagerAdapter {
-
-//        //4制定指示器对应标签
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            String Title = mNewPagerTitle.get(position);
-//            return Title;
-//        }
+        //4制定指示器对应标签
+        @Override
+        public CharSequence getPageTitle(int position) {
+            String Title = mNewPagerTitle.get(position);
+            return Title;
+        }
 
         @Override
         public int getCount() {
@@ -167,11 +174,7 @@ public class NewsFragment extends BaseFragment {
         System.out.println("解析结果" + mNewsMenu.result.data);
 
     }
-
-    /**
-     * 打开或者关闭侧边栏
-     */
-    protected void toggle() {
+    public  void toggle() {
         MainActivity mainUI = (MainActivity) mActivity;
         SlidingMenu slidingMenu = mainUI.getSlidingMenu();
         slidingMenu.toggle();// 如果当前状态是开, 调用后就关; 反之亦然
