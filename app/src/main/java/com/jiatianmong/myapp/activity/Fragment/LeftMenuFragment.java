@@ -29,8 +29,8 @@ public class LeftMenuFragment extends BaseFragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 mSelectMenu = checkedId;
-                toggle();
                 showFragment(checkedId);
+                toggle();
             }
         });
     }
@@ -39,6 +39,7 @@ public class LeftMenuFragment extends BaseFragment {
     public void initData() {
 
     }
+
     private void showFragment(int checkedId){
         MainActivity activity = (MainActivity) mActivity;
         activity.setFragment(checkedId);

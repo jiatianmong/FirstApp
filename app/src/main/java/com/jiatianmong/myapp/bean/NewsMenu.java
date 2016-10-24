@@ -14,16 +14,28 @@ public class NewsMenu {
 
 	public int error_code;
 	public String reason;
+	public Result result;
+
 	@Override
 	public String toString() {
-		return "NewsMenuData [error_code=" + error_code + ", reason=" + reason+ "]";
+		return "NewsMenu{" +
+				"error_code=" + error_code +
+				", reason='" + reason + '\'' +
+				", result=" + result +
+				'}';
 	}
-	public class result {
-		public String stat;
+
+	public class Result {
 		@Override
 		public String toString() {
-			return "result [stat=" + stat + "]";
+			return "result{" +
+					"stat='" + stat + '\'' +
+					", data=" + data +
+					'}';
 		}
+
+		public String stat;
+
 		public ArrayList<NewsTabData> data;
 
 
@@ -45,10 +57,19 @@ public class NewsMenu {
 
 		@Override
 		public String toString() {
-			return "NewsMenuData [title=" + title + ", date=" + date+ "]";
+			return "NewsTabData{" +
+					"author_name='" + author_name + '\'' +
+					", date='" + date + '\'' +
+					", realtype='" + realtype + '\'' +
+					", thumbnail_pic_s='" + thumbnail_pic_s + '\'' +
+					", thumbnail_pic_s02='" + thumbnail_pic_s02 + '\'' +
+					", thumbnail_pic_s03='" + thumbnail_pic_s03 + '\'' +
+					", title='" + title + '\'' +
+					", type='" + type + '\'' +
+					", uniquekey='" + uniquekey + '\'' +
+					", url='" + url + '\'' +
+					'}';
 		}
-
-
 	}
 
 }

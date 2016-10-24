@@ -5,10 +5,9 @@
 	android:layout_height="50dp"
 	android:background="@mipmap/title_zi_bg">
 	<ImageButton android:id="@+id/btn_imagemenu"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
+	             android:layout_width="50dp"
+	             android:layout_height="match_parent"
 	             android:layout_centerVertical="true"
-	             android:layout_marginLeft="10dp"
 	             android:background="@null"
 	             android:src="@mipmap/img_menu"/>
 	<TextView android:id="@+id/tv_title"
