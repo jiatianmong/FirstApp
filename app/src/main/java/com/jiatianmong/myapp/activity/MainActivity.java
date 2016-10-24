@@ -1,5 +1,6 @@
 package com.jiatianmong.myapp.activity;
 
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,7 +16,7 @@ import com.jiatianmong.myapp.activity.Fragment.NewsFragment;
 import com.jiatianmong.myapp.activity.Fragment.PicsFragment;
 
 public class MainActivity extends SlidingFragmentActivity {
-
+    private SlidingMenu.CanvasTransformer mTransformer;
     private static final String TAG_NEW = "TAG_NEW";
     private static final String TAG_MUSIC = "TAG_MUSIC";
     private static final String TAG_MOVIE = "TAG_MOVIE";
@@ -30,6 +31,26 @@ public class MainActivity extends SlidingFragmentActivity {
         super.onCreate(savedInstanceState);
         //去除掉当前activity头title
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        initAnimation();
+
+        initSlidingMenu();
+
+
+        init_fragment();
+    }
+
+    //伸缩模式
+    private void initAnimation() {
+        mTransformer = new SlidingMenu.CanvasTransformer(){
+            @Override
+            public void transformCanvas(Canvas canvas, float percentOpen) {
+                canvas.scale(percentOpen, 1, 0, 0);
+            }
+
+        };
+    }
+
+    private void initSlidingMenu() {
         setContentView(R.layout.activity_main);
         setBehindContentView(R.layout.left_menu);
         SlidingMenu slidingMenu = getSlidingMenu();
@@ -37,10 +58,9 @@ public class MainActivity extends SlidingFragmentActivity {
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);// 边缘触摸
         slidingMenu.setBehindOffset(200);// 屏幕预留500像素宽度
         slidingMenu.setFadeDegree(0.35f);// 设置渐入渐出效果的值
-
-        init_fragment();
+        slidingMenu.setBehindScrollScale(0.0f);
+        slidingMenu.setBehindCanvasTransformer(mTransformer);
     }
-
     private void init_fragment() {
         mSupportFragmentManager = getSupportFragmentManager();
         //开启事务

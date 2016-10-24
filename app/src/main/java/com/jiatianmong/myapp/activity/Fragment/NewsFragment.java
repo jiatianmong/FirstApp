@@ -1,10 +1,15 @@
 package com.jiatianmong.myapp.activity.Fragment;
 
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jiatianmong.myapp.R;
+import com.jiatianmong.myapp.activity.MainActivity;
 import com.jiatianmong.myapp.bean.NewsMenu;
 import com.jiatianmong.myapp.global.GlobalContents;
 import com.jiatianmong.myapp.utils.CacheUtils;
@@ -27,13 +32,24 @@ public class NewsFragment extends BaseFragment{
     private ViewPager mViewPager;
     private List mHtnlData;
     private NewsMenu mNewsMenu;
-
+    private TextView mTextView;
+    private ImageButton mImageButton;
 
 
     @Override
     public View initView() {
         View view = View.inflate(mActivity, R.layout.fragment_news, null);
         mViewPager = (ViewPager) view.findViewById(R.id.vp_newstabpager);
+        mTextView = (TextView) view.findViewById(R.id.tv_title);
+        mImageButton = (ImageButton) view.findViewById(R.id.btn_imagemenu);
+        mTextView.setText("News");
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggle();
+            }
+        });
+        mTextView.setTextColor(Color.WHITE);
         com.lidroid.xutils.ViewUtils.inject(this, view);
         System.out.println("lala");
 
@@ -122,5 +138,14 @@ public class NewsFragment extends BaseFragment{
         System.out.println("解析结果"+mNewsMenu);
 
     }
+    /**
+     * 打开或者关闭侧边栏
+     */
+    protected void toggle() {
+        MainActivity mainUI = (MainActivity) mActivity;
+        SlidingMenu slidingMenu = mainUI.getSlidingMenu();
+        slidingMenu.toggle();// 如果当前状态是开, 调用后就关; 反之亦然
+    }
+
 
 }
