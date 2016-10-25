@@ -6,5 +6,4 @@ package com.jiatianmong.myapp.global;
 public class GlobalContents {
     public static final String APIKEY = "b990282696d400a194a598766577a711";
     public static final String SERVER_URL = "http://v.juhe.cn/toutiao/index";
-    public static final String CATEGORY_URL = SERVER_URL+"/categories.json";
 }

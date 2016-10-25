@@ -8,20 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jiatianmong.myapp.R;
 import com.jiatianmong.myapp.activity.MainActivity;
 import com.jiatianmong.myapp.activity.pager.NewsTabPager;
 import com.jiatianmong.myapp.bean.NewsMenu;
-import com.jiatianmong.myapp.global.GlobalContents;
-import com.jiatianmong.myapp.utils.CacheUtils;
-import com.lidroid.xutils.HttpUtils;
-import com.lidroid.xutils.exception.HttpException;
-import com.lidroid.xutils.http.RequestParams;
-import com.lidroid.xutils.http.ResponseInfo;
-import com.lidroid.xutils.http.callback.RequestCallBack;
-import com.lidroid.xutils.http.client.HttpRequest;
 import com.viewpagerindicator.TabPageIndicator;
 
 import java.net.HttpURLConnection;
@@ -38,12 +29,12 @@ public class NewsFragment extends BaseFragment {
     private List mHtnlData;
     private NewsMenu mNewsMenu;
     private TextView mTextView;
-    public static ArrayList<String> mNewPagerTitle =new ArrayList<>() ;
-    private ArrayList<NewsTabPager> mNewsTabPager;
+    public static ArrayList<String> mNewPagerTitle = new ArrayList<>();
+    private ArrayList<NewsTabPager> mNewsTabPagerList;
     private ImageButton mImageButton;
     private TabPageIndicator mIndicator;
 
-
+    private NewsTabPager mNewsTabPager;
 
     @Override
     public View initView() {
@@ -82,58 +73,52 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     public void initData() {
-        System.out.println("链接网路");
-
-        getDataFromServer();
-
         init_PagerAdapte();
 
 
-}
+    }
 
 
     private void init_PagerAdapte() {
-        mNewsTabPager = new ArrayList<>();
+        mNewsTabPagerList = new ArrayList<>();
         for (int i = 0; i < mNewPagerTitle.size(); i++) {
             NewsTabPager mBaseNewTab = new NewsTabPager(mActivity, mNewPagerTitle.get(i));
-            mNewsTabPager.add(mBaseNewTab);
+            mNewsTabPagerList.add(mBaseNewTab);
         }
+        //因为ViewPager的预加载，所以对ViewPager设置监听，只到当前页才加载数据
+
         mViewPager.setAdapter(new NewsTabadapter());
         //在页签内容加载数据完再绑定，将ViewPager和指示器绑定
+        mViewPagerListener();
+
         mIndicator.setViewPager(mViewPager);
+
     }
-    /*
-        从服务器获取json数据
-         */
-    /*
-        从服务器获取json数据
-         */
-    public void getDataFromServer() {
-        RequestParams params = new RequestParams();
-        params.addQueryStringParameter("key", GlobalContents.APIKEY);
-        HttpUtils httpUtils = new HttpUtils();
-        httpUtils.send(HttpRequest.HttpMethod.GET, GlobalContents.SERVER_URL, params, new RequestCallBack<String>() {
+
+    private void mViewPagerListener() {
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onSuccess(ResponseInfo<String> responseInfo) {
-                //返回数据
-                String result = responseInfo.result;
-                //System.out.println("result"+result);
-                //解析数据
-                processJsonData(result);
-                System.out.println("解析完json数据");
-                //设置缓存
-                CacheUtils.setCache(GlobalContents.CATEGORY_URL, result, mActivity);
-                System.out.println("设置缓存");
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
-            public void onFailure(HttpException e, String s) {
+            public void onPageSelected(int position) {
+                System.out.println("当前页面-->" + mNewPagerTitle.get(position));
+                mNewsTabPager.initData(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
             }
         });
-
     }
-       class NewsTabadapter extends PagerAdapter {
+
+
+    class NewsTabadapter extends PagerAdapter {
+
 
         //4制定指示器对应标签
         @Override
@@ -144,7 +129,7 @@ public class NewsFragment extends BaseFragment {
 
         @Override
         public int getCount() {
-            return mNewsTabPager.size();
+            return mNewsTabPagerList.size();
         }
 
         @Override
@@ -154,12 +139,16 @@ public class NewsFragment extends BaseFragment {
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-            NewsTabPager newsTabPager = mNewsTabPager.get(position);
-            View view = newsTabPager.mRootView;
+            mNewsTabPager = mNewsTabPagerList.get(position);
+            View view = mNewsTabPager.mRootView;
             container.addView(view);
-            newsTabPager.initData();
+            //先加载首页
+            if (position == 0) {
+                mNewsTabPager.initData(0);
+            }
             return view;
         }
+
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
@@ -167,14 +156,8 @@ public class NewsFragment extends BaseFragment {
         }
     }
 
-    private void processJsonData(String json) {
 
-        Gson gson = new Gson();
-        mNewsMenu = gson.fromJson(json, NewsMenu.class);
-        System.out.println("解析结果" + mNewsMenu.result.data);
-
-    }
-    public  void toggle() {
+    public void toggle() {
         MainActivity mainUI = (MainActivity) mActivity;
         SlidingMenu slidingMenu = mainUI.getSlidingMenu();
         slidingMenu.toggle();// 如果当前状态是开, 调用后就关; 反之亦然

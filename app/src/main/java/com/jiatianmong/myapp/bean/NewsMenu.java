@@ -38,8 +38,6 @@ public class NewsMenu {
 
 		public ArrayList<NewsTabData> data;
 
-
-
 	}
 
 	// 页签的对象

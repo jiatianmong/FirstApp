@@ -41,7 +41,7 @@ public class BasePager {
 
 
     // 初始化数据
-    public void initData() {
+    public void initData(int position) {
 
     }
 
