@@ -6,8 +6,9 @@
 	<ListView
 		android:id="@+id/lv_newsList"
 		android:layout_width="match_parent"
-		android:cacheColorHint="#fff"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content"
+		android:divider="#bab9ba"
+		android:footerDividersEnabled="true">
 	</ListView>
 
 </LinearLayout>

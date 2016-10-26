@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
@@ -67,8 +68,11 @@ public class MainActivity extends SlidingFragmentActivity {
         slidingMenu.setMode(SlidingMenu.LEFT);
         // 全屏：TOUCHMODE_FULLSCREEN ；边缘：TOUCHMODE_MARGIN ；不打开：TOUCHMODE_NONE
         slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);// 边缘触摸
+        //获取屏幕宽度
+        WindowManager wm1 = this.getWindowManager();
+        int width1 = wm1.getDefaultDisplay().getWidth();
 
-        slidingMenu.setBehindOffset(200);// 屏幕预留500像素宽度
+        slidingMenu.setBehindOffset(width1/2);// 屏幕预留1/2像素宽度
 
         slidingMenu.setBehindScrollScale(0.0f);
         slidingMenu.setBehindCanvasTransformer(mTransformer);

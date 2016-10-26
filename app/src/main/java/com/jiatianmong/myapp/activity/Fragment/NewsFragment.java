@@ -85,36 +85,15 @@ public class NewsFragment extends BaseFragment {
             NewsTabPager mBaseNewTab = new NewsTabPager(mActivity, mNewPagerTitle.get(i));
             mNewsTabPagerList.add(mBaseNewTab);
         }
-        //因为ViewPager的预加载，所以对ViewPager设置监听，只到当前页才加载数据
-
+        //虽然ViewPager的预加载，但对ViewPager设置监听，只到当前页才加载数据，会出现内容不对头，加载不出，所以还是预加载
         mViewPager.setAdapter(new NewsTabadapter());
-        //在页签内容加载数据完再绑定，将ViewPager和指示器绑定
-        mViewPagerListener();
 
+        //在页签内容加载数据完再绑定，将ViewPager和指示器绑定
         mIndicator.setViewPager(mViewPager);
 
     }
 
-    private void mViewPagerListener() {
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                System.out.println("当前页面-->" + mNewPagerTitle.get(position));
-                mNewsTabPager.initData(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
 
 
     class NewsTabadapter extends PagerAdapter {
@@ -142,6 +121,8 @@ public class NewsFragment extends BaseFragment {
             mNewsTabPager = mNewsTabPagerList.get(position);
             View view = mNewsTabPager.mRootView;
             container.addView(view);
+            mNewsTabPager.initData(position);
+
             //先加载首页
             if (position == 0) {
                 mNewsTabPager.initData(0);

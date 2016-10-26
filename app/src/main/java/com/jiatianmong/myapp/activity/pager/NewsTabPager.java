@@ -114,17 +114,17 @@ public class NewsTabPager extends BasePager {
         mIndicator.setViewPager(mViewPagerToPic);
 
         mViewPagerToPicListener();
-
-
-            mListNews.setAdapter(new NewsListAdapter());
+        mListNews.setAdapter(new NewsListAdapter());
 
     }
 
     class NewsListAdapter extends BaseAdapter {
 
         private BitmapUtils mBitmapUtils;
+
         public NewsListAdapter() {
             mBitmapUtils = new BitmapUtils(mActivity);
+            mBitmapUtils.configDefaultLoadingImage(R.mipmap.jiazai);
         }
         @Override
         public int getCount() {
@@ -149,7 +149,8 @@ public class NewsTabPager extends BasePager {
                 mItemAdapter = new ItemAdapter();
                 mItemAdapter.iv_image = (ImageView) convertView.findViewById(R.id.iv_icon);
                 mItemAdapter.tv_title = (TextView) convertView.findViewById(R.id.tv_listtitle);
-                mItemAdapter.tv_Data = (TextView) convertView.findViewById(R.id.tv_utl);
+                mItemAdapter.tv_author = (TextView) convertView.findViewById(R.id.tv_author_name);
+                mItemAdapter.tv_Data = (TextView) convertView.findViewById(R.id.tv_date);
                 convertView.setTag(mItemAdapter);
             } else {
                 mItemAdapter = (ItemAdapter) convertView.getTag();
@@ -157,7 +158,8 @@ public class NewsTabPager extends BasePager {
             NewsMenu.NewsTabData newsData = (NewsMenu.NewsTabData) getItem(position);
             mBitmapUtils.display(mItemAdapter.iv_image, newsData.thumbnail_pic_s);
             mItemAdapter.tv_title.setText(newsData.title);
-            mItemAdapter.tv_Data.setText(newsData.url);
+            mItemAdapter.tv_Data.setText(newsData.date);
+            mItemAdapter.tv_author.setText(newsData.author_name);
             return convertView;
 
         }
@@ -166,6 +168,7 @@ public class NewsTabPager extends BasePager {
         private ImageView iv_image;
         private TextView tv_title;
         private TextView tv_Data;
+        private TextView tv_author;
     }
 
     public void getDataFromServer(final String type) {
@@ -185,8 +188,6 @@ public class NewsTabPager extends BasePager {
 
 /*                //设置缓存,使用SharedPreferences缓存
                 CacheUtils.setCache(type, result, mActivity);*/
-
-
                 FileService.saveContentToSdcard(result, type);
 
                 System.out.println("设置缓存");
