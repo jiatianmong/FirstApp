@@ -1,8 +1,10 @@
 package com.jiatianmong.myapp.activity.pager;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,7 @@ import com.viewpagerindicator.LinePageIndicator;
 
 import java.util.ArrayList;
 
-public class NewsTabPager extends BasePager {
+public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefreshListener   {
     private String mNewPagerTitle;
     public static ArrayList<String> MNEWPAGERTITLENAME = new ArrayList<>();
     private NewsMenu mNewsMenu;
@@ -37,13 +39,18 @@ public class NewsTabPager extends BasePager {
     private TextView mTopPicTie;
     private LinePageIndicator mIndicator;
     private ListView mListNews;
+    private static final int REFRESH_COMPLETE = 0X110;
+    private SwipeRefreshLayout mSwipeLayout;
+    private int mPosition;
 
     public NewsTabPager(Activity activity, String mTabNewsName) {
         super(activity);
         mNewPagerTitle = mTabNewsName;
         init_listtitle();
+
         //init_new_urlpic();
     }
+
 //
 //    private void init_new_urlpic() {
 //        TOPNEWPIC.add(mNewsMenu.result.data.get(0).thumbnail_pic_s);
@@ -51,6 +58,21 @@ public class NewsTabPager extends BasePager {
 //        TOPNEWPIC.add(mNewsMenu.result.data.get(0).thumbnail_pic_s03);
 //    }
 
+    //下拉刷新
+    private Handler mHandler = new Handler()
+    {
+        public void handleMessage(android.os.Message msg)
+        {
+            switch (msg.what)
+            {
+                case REFRESH_COMPLETE:
+                    getDataFromServer(MNEWPAGERTITLENAME.get(mPosition));
+                    mSwipeLayout.setRefreshing(false);//设置不刷新
+                    break;
+
+            }
+        }
+    };
     private void init_listtitle() {
         MNEWPAGERTITLENAME.add("top");
         MNEWPAGERTITLENAME.add("shehui");
@@ -68,7 +90,11 @@ public class NewsTabPager extends BasePager {
     public View initView() {
         View view = View.inflate(mActivity, R.layout.pager_newslist, null);
        mListNews = (ListView) view.findViewById(R.id.lv_newsList);
-
+        //下拉刷新控件初始化
+        mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.id_swipe_ly);
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
         ViewUtils.inject(this,view);
 
         View headview = View.inflate(mActivity, R.layout.pager_newstoppic, null);
@@ -96,11 +122,22 @@ public class NewsTabPager extends BasePager {
 
         String cache = FileService.getFileFromSd(MNEWPAGERTITLENAME.get(position));
         if (!TextUtils.isEmpty(cache)) {
+            mSwipeLayout.setRefreshing(true);
+            //进入页面先自动刷新，显示转圈
+            mSwipeLayout.post(new Runnable(){
+                @Override
+                public void run() {
+                    mSwipeLayout.setRefreshing(true);
+                    mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
+                }
+            });
+
+            //有缓存先加载缓存数据
             processJsonData(cache);
         }
-        getDataFromServer(MNEWPAGERTITLENAME.get(position));
+        //getDataFromServer(MNEWPAGERTITLENAME.get(position));
 
-
+        mPosition = position;
     }
 
 
@@ -115,6 +152,14 @@ public class NewsTabPager extends BasePager {
 
         mViewPagerToPicListener();
         mListNews.setAdapter(new NewsListAdapter());
+
+    }
+
+    @Override
+    public void onRefresh() {
+
+        System.out.println("onRefresh");
+        mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
 
     }
 
