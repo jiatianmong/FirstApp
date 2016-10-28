@@ -41,7 +41,6 @@ public class MainActivity extends SlidingFragmentActivity {
 
         initSlidingMenu();
 
-
         init_fragment();
     }
 
