@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -53,7 +54,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
     // 最后可见条目的索引
     private int lastVisibleIndex;
     int footerViewHeight;
-
+    private Handler picHandler;
     public NewsTabPager(Activity activity, String mTabNewsName) {
         super(activity);
         mNewPagerTitle = mTabNewsName;
@@ -71,13 +72,13 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
 
     //下拉刷新
     private Handler mHandler = new Handler() {
+        //下拉刷新
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
                 case REFRESH_COMPLETE:
                     getDataFromServer(MNEWPAGERTITLENAME.get(mPosition));
                     mSwipeLayout.setRefreshing(false);//设置不刷新
                     break;
-
             }
         }
     };
@@ -99,6 +100,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
     public View initView() {
         View view = View.inflate(mActivity, R.layout.pager_newslist, null);
         mListNews = (ListView) view.findViewById(R.id.lv_newsList);
+
         //下拉刷新控件初始化
         mSwipeLayout = (SwipeRefreshLayout) view.findViewById(R.id.id_swipe_ly);
         mSwipeLayout.setOnRefreshListener(this);
@@ -126,6 +128,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
 
         return view;
     }
+
     @Override
     public void initData(int position) {
 
@@ -155,16 +158,24 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
         mPosition = position;
 
 
+
     }
 
     //加载更多标志
     private boolean isLoadingMore;
+
     private void mListNewsOnScrollListener() {
         mListNews.setOnScrollListener(new AbsListView.OnScrollListener() {
             public int firstVisibleItem;
 
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
+                        && lastVisibleIndex + 1 == mNewsMenu.result.data.size() ) {
+                    //加载更多
+                    Toast.makeText(mActivity, "数据已全部加载完成，没有更多数据！", Toast.LENGTH_LONG).show();
+                }
 
                 //当滑动到底部时
                 if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE
@@ -186,9 +197,8 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
                 // 计算最后可见条目的索引
                 lastVisibleIndex = firstVisibleItem + visibleItemCount - 2;
                 //所有的条目已经和最大条数相等，则移除底部的View
-                if (totalItemCount == mNewsMenu.result.data.size()+2) {
+                if (totalItemCount == mNewsMenu.result.data.size() + 2) {
                     mListNews.removeFooterView(footerView);
-                    Toast.makeText(mActivity, "数据已全部加载完成，没有更多数据！", Toast.LENGTH_LONG).show();
                 }
 
                 if (footerView != null) {
@@ -206,16 +216,19 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
     }
 
 
-
-
     private void processJsonData(String json) {
 
         Gson gson = new Gson();
         mNewsMenu = gson.fromJson(json, NewsMenu.class);
         System.out.println("解析结果" + mNewsMenu.result.data);
-        //填充完数据就绑定Indicater
+        //填充完数据就绑定Indicater  新闻列表头布局
         mViewPagerToPic.setAdapter(new NewsPagerToPicAdapter());
         mIndicator.setViewPager(mViewPagerToPic);
+        //设置完头布局图片让其轮播
+        PicAutoScoll();
+        //设置触摸事件，触摸不轮播
+        mViewPagerToPicTouLis();
+
 
         mViewPagerToPicListener();
         //数据适配
@@ -223,6 +236,54 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
 
         mListNewsOnScrollListener();
         mListNewsOnclickListener();
+    }
+
+    private void mViewPagerToPicTouLis() {
+        mViewPagerToPic.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                    //触摸时停止发送轮播消息
+                        picHandler.removeCallbacksAndMessages(null);
+                    break;
+                    case MotionEvent.ACTION_UP:
+                    //抬起重新发消息
+                        picHandler.sendEmptyMessageDelayed(0, 3000);
+                    break;
+                    case MotionEvent.ACTION_CANCEL:
+                    //按住滑动时不走up
+                        picHandler.sendEmptyMessageDelayed(0, 3000);
+                    break;
+                }
+
+                return false;
+            }
+
+        });
+    }
+
+    private void PicAutoScoll() {
+        if (picHandler == null) {
+            //循环轮播
+            picHandler = new Handler() {
+
+                public void handleMessage(android.os.Message msg) {
+                    int currentItem = mViewPagerToPic.getCurrentItem();
+                    currentItem++;
+
+                    if (currentItem > 5) {
+                        currentItem = 0;
+                    }
+
+                    mViewPagerToPic.setCurrentItem(currentItem);
+
+                    picHandler.sendEmptyMessageDelayed(0, 3000);
+                }
+
+            };
+            picHandler.sendEmptyMessageDelayed(0, 3000);
+        }
     }
 
     private void mListNewsOnclickListener() {
@@ -244,13 +305,13 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
                     ShaPreUtils.setString(mActivity, "read_uniquekey", READ_UNIQUEKEY);
                 }
 
-               TextView tv_title = (TextView) view.findViewById(R.id.tv_listtitle);
+                TextView tv_title = (TextView) view.findViewById(R.id.tv_listtitle);
                 tv_title.setTextColor(Color.GRAY);
 
-                System.out.println("第"+position+"个被点击了");
+                System.out.println("第" + position + "个被点击了");
 
                 Intent intent = new Intent(mActivity, NewsDetailActivity.class);
-                intent.putExtra("url",mNewsMenu.result.data.get(position).url);
+                intent.putExtra("url", mNewsMenu.result.data.get(position).url);
                 mActivity.startActivity(intent);
 
             }
@@ -264,6 +325,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
         mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
 
     }
+
 
     class NewsListAdapter extends BaseAdapter {
 
@@ -311,7 +373,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
             mItemAdapter.tv_author.setText(newsData.author_name);
             //根据存储的条目图片id，给Textview标志已读
             String READ_UNIQUEKEY = ShaPreUtils.getString(mActivity, "read_uniquekey", "");
-            if (READ_UNIQUEKEY.contains(mNewsMenu.result.data.get(position).thumbnail_pic_s+"")) {
+            if (READ_UNIQUEKEY.contains(mNewsMenu.result.data.get(position).thumbnail_pic_s + "")) {
                 mItemAdapter.tv_title.setTextColor(Color.GRAY);
             } else {
                 mItemAdapter.tv_title.setTextColor(Color.BLACK);
@@ -334,7 +396,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
         params.addQueryStringParameter("key", GlobalContents.APIKEY);
         params.addQueryStringParameter("type", type);
         HttpUtils httpUtils = new HttpUtils();
-        httpUtils.send(HttpRequest.HttpMethod.GET, GlobalContents.SERVER_URL, params,
+        httpUtils.send(HttpRequest.HttpMethod.GET, GlobalContents.NEWS_SERVER_URL, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
@@ -394,6 +456,8 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+
+
     }
 
 

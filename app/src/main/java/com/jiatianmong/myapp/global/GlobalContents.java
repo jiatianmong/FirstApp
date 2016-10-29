@@ -5,5 +5,8 @@ package com.jiatianmong.myapp.global;
  */
 public class GlobalContents {
     public static final String APIKEY = "b990282696d400a194a598766577a711";
-    public static final String SERVER_URL = "http://v.juhe.cn/toutiao/index";
+    public static final String NEWS_SERVER_URL = "http://v.juhe.cn/toutiao/index";
+    public static final String MOVIES_SERVER_URL = "http://op.juhe.cn/onebox/movie/video";
+
+
 }
