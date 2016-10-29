@@ -8,7 +8,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/PullToRefreshlibrary" />
             <option value="$PROJECT_DIR$/SlidingMenulibrary" />
             <option value="$PROJECT_DIR$/ViewPagerIndicatorlibrary" />
             <option value="$PROJECT_DIR$/app" />
@@ -17,7 +16,6 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/PullToRefreshlibrary" />
             <option value="$PROJECT_DIR$/SlidingMenulibrary" />
             <option value="$PROJECT_DIR$/ViewPagerIndicatorlibrary" />
             <option value="$PROJECT_DIR$/app" />

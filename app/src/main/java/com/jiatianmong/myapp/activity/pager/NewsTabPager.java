@@ -1,6 +1,7 @@
 package com.jiatianmong.myapp.activity.pager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.jiatianmong.myapp.R;
+import com.jiatianmong.myapp.activity.NewsDetailActivity;
 import com.jiatianmong.myapp.bean.FileService;
 import com.jiatianmong.myapp.bean.NewsMenu;
 import com.jiatianmong.myapp.global.GlobalContents;
@@ -246,6 +248,11 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
                 tv_title.setTextColor(Color.GRAY);
 
                 System.out.println("第"+position+"个被点击了");
+
+                Intent intent = new Intent(mActivity, NewsDetailActivity.class);
+                intent.putExtra("url",mNewsMenu.result.data.get(position).url);
+                mActivity.startActivity(intent);
+
             }
         });
     }

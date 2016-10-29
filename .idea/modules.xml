@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyApp.iml" filepath="$PROJECT_DIR$/MyApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PullToRefreshlibrary/PullToRefreshlibrary.iml" filepath="$PROJECT_DIR$/PullToRefreshlibrary/PullToRefreshlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/SlidingMenulibrary/SlidingMenulibrary.iml" filepath="$PROJECT_DIR$/SlidingMenulibrary/SlidingMenulibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewPagerIndicatorlibrary/ViewPagerIndicatorlibrary.iml" filepath="$PROJECT_DIR$/ViewPagerIndicatorlibrary/ViewPagerIndicatorlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
