@@ -113,7 +113,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
 
         ViewUtils.inject(this, view);
 
-        View headview = View.inflate(mActivity, R.layout.pager_newstoppic, null);
+        View headview = View.inflate(mActivity, R.layout.pager_newspic, null);
         mViewPagerToPic = (ViewPager) headview.findViewById(R.id.vp_newspicPager);
         mTopPicTie = (TextView) headview.findViewById(R.id.tv_newsTile);
         mIndicator = (LinePageIndicator) headview.findViewById(R.id.lp_indicator);
