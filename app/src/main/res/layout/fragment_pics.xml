@@ -3,9 +3,30 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-	<TextView android:layout_width="wrap_content"
-	          android:text="图片"
-	          android:layout_height="wrap_content"/>
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="50dp"
+		android:background="@mipmap/title_zi_bg">
+		<ImageButton android:id="@+id/btn_imagepic"
+		             android:layout_width="50dp"
+		             android:layout_height="match_parent"
+		             android:layout_centerVertical="true"
+		             android:background="@null"
+		             android:src="@mipmap/img_menu"/>
+		<TextView android:id="@+id/tv_pictitle"
+		          android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:layout_centerHorizontal="true"
+		          android:layout_centerVertical="true"
+		          android:padding="5dp"/>
+	</RelativeLayout>
 
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/recyclerview_vertical"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+
+	/>
 
 </LinearLayout>

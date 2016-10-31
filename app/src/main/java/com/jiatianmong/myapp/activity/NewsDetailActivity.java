@@ -21,6 +21,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
 
+
 /**
  * 新闻详情页面
  *
@@ -116,7 +117,7 @@ public class NewsDetailActivity extends Activity implements OnClickListener {
         //关闭sso授权
         oks.disableSSOWhenAuthorize();
 
-        // 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
+// 分享时Notification的图标和文字  2.5.9以后的版本不调用此方法
         //oks.setNotification(R.drawable.ic_launcher, getString(R.string.app_name));
         // title标题，印象笔记、邮箱、信息、微信、人人网和QQ空间使用
         oks.setTitle("标题");

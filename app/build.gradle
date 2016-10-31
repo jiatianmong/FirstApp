@@ -43,7 +43,8 @@ dependencies {
     compile files('libs/ShareSDK-Wechat-Core-2.7.8.jar')
     compile files('libs/ShareSDK-Wechat-Favorite-2.7.8.jar')
     compile files('libs/ShareSDK-Wechat-Moments-2.7.8.jar')
-    compile project(':swipeback')
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:gridlayout-v7:24.2.1'
 }
 
 

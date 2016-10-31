@@ -86,10 +86,15 @@ public class MainActivity extends SlidingFragmentActivity {
         mFragmentTransaction.replace(R.id.fl_left_menu, new LeftMenuFragment(), TAG_LEFT_MENU);
 
 
-        if (mNewsFragment == null) {
-            mNewsFragment = new NewsFragment();
+//        if (mNewsFragment == null) {
+//            mNewsFragment = new NewsFragment();
+//        }
+//        mFragmentTransaction.add(R.id.fl_main, mNewsFragment, TAG_NEW);
+
+        if (mPicsFragment == null) {
+            mPicsFragment = new PicsFragment();
         }
-        mFragmentTransaction.add(R.id.fl_main, mNewsFragment, TAG_NEW);
+        mFragmentTransaction.add(R.id.fl_main, mPicsFragment, TAG_PIC);
 
         mFragmentTransaction.commit();
 
