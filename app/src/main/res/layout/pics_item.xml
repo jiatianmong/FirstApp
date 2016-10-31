@@ -3,14 +3,14 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:layout_margin="10dp"
-	android:background="#f00">
+	android:background="#0f0"
+	android:layout_margin="3dp">
 	<ImageView
 		android:id="@+id/item_img"
-		android:layout_width="180dp"
-		android:layout_height="100dp"
+		android:layout_width="233dp"
+		android:layout_height="233dp"
 		android:layout_centerHorizontal="true"
-		android:scaleType="fitCenter"
+		android:scaleType="fitXY"
 		android:src="@mipmap/ic_launcher"/>
 	<TextView
 		android:id="@+id/id_num"

@@ -7,9 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jiatianmong.myapp.R;
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
+import com.lidroid.xutils.bitmap.core.BitmapSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,58 +23,74 @@ import java.util.List;
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context mcontext;
-    List<String> mlist;
     List<Integer> mheight;
-    public MyAdapter(Context context, List<String> list) {
+    private PicsMenu mPicsMenu;
+    private BitmapUtils mBitmapUtils;
+    int posion;
 
-        mcontext=context;
-        mlist=list;
+
+    public MyAdapter(Context context, PicsMenu list) {
+
+        mcontext = context;
+        mPicsMenu = list;
+
+        getPosion();
+        mBitmapUtils = new BitmapUtils(context);
+        mBitmapUtils.configDefaultLoadingImage(R.mipmap.jiazai);
 
         //随机高度集合
-        mheight= new ArrayList<>();
-        for(int i=0;i<mlist.size();i++){
-            mheight.add((int)(100+Math.random()*300));
+        mheight = new ArrayList<>();
+        for (int i = 0; i < mPicsMenu.data.size(); i++) {
+            mheight.add((int) (200 + Math.random() * 300));
         }
 
     }
-
-
 
 
     @Override
     public int getItemCount() {
 
-        return mlist.size();
+        return mPicsMenu.data.size();
     }
 
+    private ImageView mImageView;
+
+    public int getPosion() {
+        return posion;
+    }
 
     //找到布局中空间位置
-    class MyViewHolder extends RecyclerView.ViewHolder{
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
+
+
         public MyViewHolder(View arg0) {
             super(arg0);
+            tv = (TextView) arg0.findViewById(R.id.id_num);
+            mImageView = (ImageView) arg0.findViewById(R.id.item_img);
 
-            tv=(TextView) arg0.findViewById(R.id.id_num);
         }
 
     }
 
-
+    private BitmapDisplayConfig mConfig;
     //绑定，渲染数据到view中
     @Override
     public void onBindViewHolder(MyViewHolder holder, int arg1) {
 
+        posion = arg1;
+        mConfig = new BitmapDisplayConfig();
         //布局参数得看父控件是什么，不然会闪退
-        FrameLayout.LayoutParams lp= (FrameLayout.LayoutParams) holder.tv.getLayoutParams();
-        lp.height=mheight.get(arg1);
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) holder.tv.getLayoutParams();
+        lp.height = mheight.get(arg1);
         holder.tv.setLayoutParams(lp);
-        holder.tv.setGravity(Gravity.END|Gravity.START|Gravity.BOTTOM);
-        holder.tv.setText(mlist.get(arg1));
-
-
-
+        holder.tv.setGravity(Gravity.END | Gravity.START | Gravity.BOTTOM);
+        holder.tv.setText(mPicsMenu.data.get(arg1).fromPageTitleEnc);
+        mBitmapUtils.display(mImageView, mPicsMenu.data.get(arg1).middleURL);
+        // 设置图片的分辨率
+        BitmapSize size = new BitmapSize(200, lp.height);
+        mConfig.setBitmapMaxSize(size);
     }
-
 
 
     //先执行onCreateViewHolder
@@ -82,10 +102,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 false));
         return holder;
     }
-
-
-
-
 
 
 }

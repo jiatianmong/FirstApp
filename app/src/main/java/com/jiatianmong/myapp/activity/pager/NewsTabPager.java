@@ -334,7 +334,7 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
         params.addQueryStringParameter("key", GlobalContents.APIKEY);
         params.addQueryStringParameter("type", type);
         HttpUtils httpUtils = new HttpUtils();
-        httpUtils.send(HttpRequest.HttpMethod.GET, GlobalContents.SERVER_URL, params,
+        httpUtils.send(HttpRequest.HttpMethod.GET, GlobalContents.SERVER_NEWSURL, params,
                 new RequestCallBack<String>() {
                     @Override
                     public void onSuccess(ResponseInfo<String> responseInfo) {
