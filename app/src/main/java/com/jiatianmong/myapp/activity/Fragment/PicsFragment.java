@@ -1,5 +1,6 @@
 package com.jiatianmong.myapp.activity.Fragment;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +14,7 @@ import com.google.gson.Gson;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jiatianmong.myapp.R;
 import com.jiatianmong.myapp.activity.MainActivity;
+import com.jiatianmong.myapp.activity.PicssDetailActivity;
 import com.jiatianmong.myapp.bean.EditTextWithDel;
 import com.jiatianmong.myapp.bean.FileService;
 import com.jiatianmong.myapp.bean.MyAdapter;
@@ -33,12 +35,13 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private PicsMenu mPicsMenu;
     private int mPosion;
     private SwipeRefreshLayout mSwipeLayout;
-    private static final int REFRESH_COMPLETE = 0X111;
+    private static final int REFRESHPIC_COMPLETE = 0X111;
     private EditTextWithDel mEditFind;
     private ImageButton mBtEnter;
     public static String SERVER_PICSURL = null;
     public static String find_content = "汽车";
     public static String pager = "1";
+    public static int sum = 1;
     private ImageButton mLeftImageButton;
 
     @Override
@@ -47,7 +50,7 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         View view = View.inflate(mActivity, R.layout.fragment_pics, null);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_vertical);
 
-        mLeftImageButton = (ImageButton) view.findViewById(R.id.btn_Leftimagepic);
+        mLeftImageButton = (ImageButton) view.findViewById(R.id.ib_picmenu);
         mEditFind = (EditTextWithDel) view.findViewById(R.id.ed_findpic);
         mBtEnter = (ImageButton) view.findViewById(R.id.imb_enter);
         mBtEnterLister();
@@ -105,11 +108,9 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 @Override
                 public void run() {
                     mSwipeLayout.setRefreshing(true);
-                    mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
+                    mHandler.sendEmptyMessageDelayed(REFRESHPIC_COMPLETE, 1000);
                 }
             });
-
-
         }
         SERVER_PICSURL = GlobalContents.SERVER_PICSURL1 + find_content + GlobalContents.SERVER_PICSURL2 + pager + GlobalContents.SERVER_PICSURL3;
         getDataFromServer();
@@ -154,7 +155,8 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         adapter = new MyAdapter(mActivity, mPicsMenu);
         mPosion = adapter.getPosion();
-
+        //设置监听
+        adapterLister();
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setAdapter(adapter);
@@ -162,11 +164,47 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     }
 
+    /**
+     * 图片列表的点击事件
+     */
+    private void adapterLister() {
+        adapter.setOnItemClickLitener(new MyAdapter.OnItemClickLitener()
+        {
+
+            @Override
+            public void onItemClick(View view, int position)
+            {
+                Toast.makeText(mActivity, position + " click",
+                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mActivity, PicssDetailActivity.class);
+                intent.putExtra("picsurl", mPicsMenu.data.get(position).middleURL);
+                mActivity.startActivity(intent);
+
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position)
+            {
+                Toast.makeText(mActivity, position + " long click",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             switch (msg.what) {
-                case REFRESH_COMPLETE:
+                case REFRESHPIC_COMPLETE:
                     //从网络获取数据
+                    if (sum == 1) {
+                        SERVER_PICSURL = GlobalContents.SERVER_PICSURL1 + find_content + GlobalContents.SERVER_PICSURL2 + "1" + GlobalContents.SERVER_PICSURL3;
+                    }
+                    if (sum == 2) {
+                        SERVER_PICSURL = GlobalContents.SERVER_PICSURL1 + find_content + GlobalContents.SERVER_PICSURL2 + "2" + GlobalContents.SERVER_PICSURL3;
+                    }
+                    if (sum == 3) {
+                        SERVER_PICSURL = GlobalContents.SERVER_PICSURL1 + find_content + GlobalContents.SERVER_PICSURL2 + "3" + GlobalContents.SERVER_PICSURL3;
+                    }
                     getDataFromServer();
                     mSwipeLayout.setRefreshing(false);
                     break;
@@ -177,6 +215,10 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
+        ++sum;
+        if (sum == 3) {
+            sum = 1;
+        }
+        mHandler.sendEmptyMessageDelayed(REFRESHPIC_COMPLETE, 1000);
     }
 }

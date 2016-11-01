@@ -3,8 +3,12 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
+	<TextView android:layout_width="wrap_content"
+	          android:text="图片"
+	          android:layout_height="wrap_content"/>
+
 	<com.jiatianmong.myapp.utils.ProgressWebView
-		android:id="@+id/wv_movies"
+		android:id="@+id/wv_picspager"
 		android:layout_width="match_parent"
 		android:layout_alignParentTop="true"
 		android:layout_centerHorizontal="true"

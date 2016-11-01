@@ -35,6 +35,7 @@
 		<activity android:name=".activity.GuideActivity"
 		          android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".activity.NewsDetailActivity"/>
+		<activity android:name=".activity.PicssDetailActivity"/>
 
 		<activity
 			android:name="com.mob.tools.MobUIShell"
@@ -60,7 +61,7 @@
 
 		<!--微信分享回调 -->
 		<activity
-			android:name="src.cn.sharesdk.demo.wxapi.WXEntryActivity"
+			android:name="cn.sharesdk.demo.wxapi.WXEntryActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar"
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:exported="true"

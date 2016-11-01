@@ -61,7 +61,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //找到布局中空间位置
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
-        ImageView iv;
 
         public MyViewHolder(View arg0) {
             super(arg0);
@@ -72,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     }
 
-//设置监听
+    //设置监听
     public interface OnItemClickLitener
     {
         void onItemClick(View view, int position);
@@ -89,7 +88,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private BitmapDisplayConfig mConfig;
     //绑定，渲染数据到view中
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int arg1) {
+    public void onBindViewHolder(final MyViewHolder holder, int arg1) {
 
         posion = arg1;
         mConfig = new BitmapDisplayConfig();
@@ -99,9 +98,35 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tv.setLayoutParams(lp);
         holder.tv.setGravity(Gravity.END | Gravity.START | Gravity.BOTTOM);
         holder.tv.setText(mPicsMenu.data.get(arg1).fromPageTitleEnc);
-        //图片错乱  不过会造成性能下降。
+        //解决图片错乱  不过会造成性能下降。
         holder.setIsRecyclable(false);
         mBitmapUtils.display(mImageView, mPicsMenu.data.get(arg1).middleURL);
+
+
+        // 如果设置了回调，则设置点击事件
+        if (mOnItemClickLitener != null)
+        {
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemClick(holder.itemView, pos);
+                }
+            });
+
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    int pos = holder.getLayoutPosition();
+                    mOnItemClickLitener.onItemLongClick(holder.itemView, pos);
+                    return false;
+                }
+            });
+        }
 
     }
 
