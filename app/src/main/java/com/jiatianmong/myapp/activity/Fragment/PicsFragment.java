@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -70,6 +71,12 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onClick(View v) {
                 find_content = mEditFind.getText().toString().trim();
+                //地缓存
+                String cache = FileService.getFileFromSd(find_content);
+                if (!TextUtils.isEmpty(cache)) {
+                    //有缓存先加载缓存数据
+                    processJsonData(cache);
+                }
                 SERVER_PICSURL = GlobalContents.SERVER_PICSURL1 + find_content + GlobalContents.SERVER_PICSURL2 + pager + GlobalContents.SERVER_PICSURL3;
                 getDataFromServer();
             }
@@ -86,24 +93,24 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void initData() {
 
-//
-//        String cache = FileService.getFileFromSd("weimei");
-//        if (!TextUtils.isEmpty(cache)) {
-//            //有缓存先加载缓存数据
-//            processJsonData(cache);
-//
-//            mSwipeLayout.setRefreshing(true);
-//            //进入页面先自动刷新，显示转圈
-//            mSwipeLayout.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mSwipeLayout.setRefreshing(true);
-//                    mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
-//                }
-//            });
-//
-//
-//        }
+
+        String cache = FileService.getFileFromSd(find_content);
+        if (!TextUtils.isEmpty(cache)) {
+            //有缓存先加载缓存数据
+            processJsonData(cache);
+
+            mSwipeLayout.setRefreshing(true);
+            //进入页面先自动刷新，显示转圈
+            mSwipeLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mSwipeLayout.setRefreshing(true);
+                    mHandler.sendEmptyMessageDelayed(REFRESH_COMPLETE, 1000);
+                }
+            });
+
+
+        }
         SERVER_PICSURL = GlobalContents.SERVER_PICSURL1 + find_content + GlobalContents.SERVER_PICSURL2 + pager + GlobalContents.SERVER_PICSURL3;
         getDataFromServer();
     }
@@ -120,7 +127,7 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         //解析数据
                         //System.out.println("result"+result);
                         processJsonData(result);
-                        FileService.saveContentToSdcard(result, "weimei");
+                        FileService.saveContentToSdcard(result,find_content);
                         System.out.println("设置缓存");
                     }
 

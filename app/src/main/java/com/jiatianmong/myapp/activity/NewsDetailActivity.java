@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -19,7 +20,6 @@ import com.lidroid.xutils.ViewUtils;
 
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
-
 
 
 /**
@@ -59,9 +59,9 @@ public class NewsDetailActivity extends Activity implements OnClickListener {
         settings.setBuiltInZoomControls(true);// 显示缩放按钮(wap网页不支持)
         settings.setUseWideViewPort(true);// 支持双击缩放(wap网页不支持)
         settings.setJavaScriptEnabled(true);// 支持js功能
-
         mUrl = getIntent().getStringExtra("url");
         mWebView.loadUrl(mUrl);
+
 
 
         mWebView.setWebViewClient(new WebViewClient() {
@@ -205,5 +205,19 @@ public class NewsDetailActivity extends Activity implements OnClickListener {
         builder.setNegativeButton("取消", null);
 
         builder.show();
+    }
+    /**
+     *
+     使点击回退按钮不会直接退出整个应用程序而是返回上一个页面
+     *
+     * */
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) {
+            mWebView.goBack();// 返回前一个页面
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
