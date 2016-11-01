@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.jiatianmong.myapp.R;
 import com.lidroid.xutils.BitmapUtils;
 import com.lidroid.xutils.bitmap.BitmapDisplayConfig;
-import com.lidroid.xutils.bitmap.core.BitmapSize;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public int getItemCount() {
 
-        return mPicsMenu.data.size();
+        return mPicsMenu.data.size()-1;
     }
 
     private ImageView mImageView;
@@ -62,7 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     //找到布局中空间位置
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv;
-
+        ImageView iv;
 
         public MyViewHolder(View arg0) {
             super(arg0);
@@ -86,10 +85,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.tv.setLayoutParams(lp);
         holder.tv.setGravity(Gravity.END | Gravity.START | Gravity.BOTTOM);
         holder.tv.setText(mPicsMenu.data.get(arg1).fromPageTitleEnc);
+        //图片错乱  不过会造成性能下降。
+        holder.setIsRecyclable(false);
         mBitmapUtils.display(mImageView, mPicsMenu.data.get(arg1).middleURL);
-        // 设置图片的分辨率
-        BitmapSize size = new BitmapSize(200, lp.height);
-        mConfig.setBitmapMaxSize(size);
+
     }
 
 
@@ -102,6 +101,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 false));
         return holder;
     }
+
+
+
+
 
 
 }

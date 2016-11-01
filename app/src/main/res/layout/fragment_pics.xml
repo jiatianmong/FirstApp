@@ -5,29 +5,56 @@
               android:background="@mipmap/left_menu"
               android:orientation="vertical">
 	<RelativeLayout
-		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
-		android:layout_height="50dp"
-		android:background="@mipmap/title_zi_bg">
-		<ImageButton android:id="@+id/btn_imagepic"
+		android:layout_height="50dp">
+		<ImageButton android:id="@+id/btn_Leftimagepic"
 		             android:layout_width="50dp"
 		             android:layout_height="match_parent"
 		             android:layout_centerVertical="true"
 		             android:background="@null"
 		             android:src="@mipmap/img_menu"/>
-		<TextView android:id="@+id/tv_pictitle"
-		          android:layout_width="wrap_content"
-		          android:layout_height="wrap_content"
-		          android:layout_centerHorizontal="true"
-		          android:layout_centerVertical="true"
-		          android:padding="5dp"/>
+		<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true"
+			android:layout_margin="5dp"
+			android:background="#a000">
+			<com.jiatianmong.myapp.bean.EditTextWithDel
+				android:id="@+id/ed_findpic"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true"
+				android:layout_gravity="center_horizontal|bottom"
+				android:layout_margin="3dp"
+				android:background="@null" android:ellipsize="end"
+				android:hint="☞搜索图片" android:padding="5dp"
+				android:singleLine="true"
+				android:textColor="#116683"/>
+
+		</RelativeLayout>
+		<ImageButton android:id="@+id/imb_enter"
+		             android:layout_width="80dp"
+		             android:layout_height="80dp"
+		             android:background="@null"
+		             android:src="@mipmap/enter"
+		             android:layout_alignParentTop="true"
+		             android:layout_alignParentRight="true"
+		             android:layout_alignParentEnd="true"/>
+
 	</RelativeLayout>
-
-	<android.support.v7.widget.RecyclerView
-		android:id="@+id/recyclerview_vertical"
+	<android.support.v4.widget.SwipeRefreshLayout
+		android:id="@+id/image_swipe"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="match_parent">
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/recyclerview_vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
 
-	/>
+		/>
+	</android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
