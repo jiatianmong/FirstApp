@@ -174,4 +174,5 @@ public class PicssDetailActivity extends Activity implements OnClickListener {
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

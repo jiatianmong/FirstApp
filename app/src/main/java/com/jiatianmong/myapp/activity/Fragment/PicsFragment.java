@@ -174,8 +174,8 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onItemClick(View view, int position)
             {
-                Toast.makeText(mActivity, position + " click",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, position + " click",
+//                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mActivity, PicssDetailActivity.class);
                 intent.putExtra("picsurl", mPicsMenu.data.get(position).middleURL);
                 mActivity.startActivity(intent);
@@ -185,8 +185,8 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             @Override
             public void onItemLongClick(View view, int position)
             {
-                Toast.makeText(mActivity, position + " long click",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mActivity, position + " long click",
+//                        Toast.LENGTH_SHORT).show();
             }
         });
     }
