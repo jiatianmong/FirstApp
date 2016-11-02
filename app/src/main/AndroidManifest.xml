@@ -37,6 +37,7 @@
 		<activity android:name=".activity.PicssDetailActivity"/>
 		<activity android:name=".activity.MoviesDetailActivity"/>
 		<activity android:name=".activity.MusicsDetailActivity"/>
+		<activity android:name=".activity.MyInfoActivity"/>
 
 		<activity
 			android:name="com.mob.tools.MobUIShell"

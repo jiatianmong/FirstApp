@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="30dp"
+		android:background="#d108ec">
+		<ImageButton android:id="@+id/btn_myinfoslose"
+		             android:layout_width="50dp"
+		             android:layout_height="match_parent"
+		             android:layout_centerVertical="true"
+		             android:background="@null"
+		             android:src="@mipmap/tuichu"/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="关于"
+			android:textColor="#fff"
+			android:textSize="20dp"/>
+	</RelativeLayout>
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="20dp"
+		android:text="        本App旨在设计一款娱乐软件。主要分四大功能模块：新闻，音乐，电影，美图;"
+		android:textColor="#320246"
+		android:textSize="20dp"/>
+	<TextView
+		android:id="@+id/appurl"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="20dp"
+		android:autoLink="web"
+		android:text="APP地址：https://github.com/jiatianmong/FirstApp.git"
+		android:textColor="#320246"
+		android:textSize="20dp"/>
+	<TextView
+		android:id="@+id/email"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="20dp"
+		android:text="作者：Xie TianMao"
+		android:textColor="#320246"
+		android:textSize="20dp"/>
+	<TextView
+		android:id="@+id/author_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="20dp"
+		android:autoLink="email"
+		android:text="邮箱：xietianmao@foxmail.com"
+		android:textColor="#320246"
+		android:textSize="20dp"/>
+
+</LinearLayout>

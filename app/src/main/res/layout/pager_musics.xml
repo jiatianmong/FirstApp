@@ -3,7 +3,25 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-
+	<RelativeLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="30dp"
+		android:background="#1bb15b">
+		<ImageButton android:id="@+id/btn_musiclose"
+		             android:layout_width="50dp"
+		             android:layout_height="match_parent"
+		             android:layout_centerVertical="true"
+		             android:background="@null"
+		             android:src="@mipmap/tuichu"/>
+		<TextView
+			android:layout_centerInParent="true"
+			android:textSize="20dp"
+			android:textColor="#fff"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Musics"/>
+	</RelativeLayout>
 	<com.jiatianmong.myapp.utils.ProgressWebView
 		android:id="@+id/wv_musics"
 		android:layout_width="match_parent"
