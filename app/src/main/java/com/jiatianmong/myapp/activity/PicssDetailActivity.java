@@ -12,6 +12,7 @@ import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 
 import com.jiatianmong.myapp.R;
 import com.lidroid.xutils.ViewUtils;
@@ -37,7 +38,14 @@ public class PicssDetailActivity extends Activity implements OnClickListener {
         setContentView(R.layout.pager_pics);
 
         ViewUtils.inject(this);
+        ImageButton iBClose = (ImageButton) findViewById(R.id.btn_piclose);
 
+        iBClose.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mWebView = (WebView) findViewById(R.id.wv_picspager);
         WebSettings settings = mWebView.getSettings();

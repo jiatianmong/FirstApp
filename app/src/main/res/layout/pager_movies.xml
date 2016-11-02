@@ -7,8 +7,8 @@
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
 		android:layout_height="30dp"
-		android:background="#009587">
-		<ImageButton android:id="@+id/btn_piclose"
+		android:background="#f9d442">
+		<ImageButton android:id="@+id/btn_movieslose"
 		             android:layout_width="50dp"
 		             android:layout_height="match_parent"
 		             android:layout_centerVertical="true"
@@ -16,7 +16,7 @@
 		             android:src="@mipmap/tuichu"/>
 	</RelativeLayout>
 	<com.jiatianmong.myapp.utils.ProgressWebView
-		android:id="@+id/wv_picspager"
+		android:id="@+id/wv_moviespager"
 		android:layout_width="match_parent"
 		android:layout_alignParentTop="true"
 		android:layout_centerHorizontal="true"

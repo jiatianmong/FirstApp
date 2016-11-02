@@ -99,6 +99,10 @@ public class MainActivity extends SlidingFragmentActivity {
         }
         mFragmentTransaction.add(R.id.fl_main, mMusicsFragment, TAG_MUSIC);
 
+        if (mMoviesFragment == null) {
+            mMoviesFragment = new MoviesFragment();
+        }
+        mFragmentTransaction.add(R.id.fl_main, mMoviesFragment, TAG_MOVIE);
 
 
         if (mNewsFragment == null) {
@@ -106,10 +110,6 @@ public class MainActivity extends SlidingFragmentActivity {
         }
         mFragmentTransaction.add(R.id.fl_main, mNewsFragment, TAG_NEW);
 
-        if (mMoviesFragment == null) {
-            mMoviesFragment = new MoviesFragment();
-        }
-        mFragmentTransaction.add(R.id.fl_main, mMoviesFragment, TAG_MOVIE);
 
         mFragmentTransaction.commit();
 

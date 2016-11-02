@@ -12,19 +12,16 @@ import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageButton;
 
 import com.jiatianmong.myapp.R;
 import com.lidroid.xutils.ViewUtils;
-
-
 /**
  * 新闻详情页面
  *
  * @author Kevin
  * @date 2015-10-22
  */
-public class MoviesDetailActivity extends Activity implements OnClickListener {
+public class MusicsDetailActivity extends Activity implements OnClickListener {
 
 
     private WebView mWebView;
@@ -35,30 +32,20 @@ public class MoviesDetailActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.pager_movies);
+        setContentView(R.layout.pager_musics);
 
         ViewUtils.inject(this);
 
 
-        ImageButton iBClose = (ImageButton) findViewById(R.id.btn_movieslose);
-
-        iBClose.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        mWebView = (WebView) findViewById(R.id.wv_moviespager);
-        WebSettings settings = mWebView.getSettings();
+        WebView webViewmusic = (WebView) findViewById(R.id.wv_musics);
+        WebSettings settings = webViewmusic.getSettings();
         settings.setBuiltInZoomControls(true);// 显示缩放按钮(wap网页不支持)
         settings.setUseWideViewPort(true);// 支持双击缩放(wap网页不支持)
         settings.setJavaScriptEnabled(true);// 支持js功能
-        mUrl = getIntent().getStringExtra("movies_url");
-        mWebView.loadUrl(mUrl);
+        String mUrl = "http://y.qq.com/";
+        webViewmusic.loadUrl(mUrl);
 
-
-
-        mWebView.setWebViewClient(new WebViewClient() {
+        webViewmusic.setWebViewClient(new WebViewClient() {
             // 开始加载网页
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
@@ -71,7 +58,6 @@ public class MoviesDetailActivity extends Activity implements OnClickListener {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 System.out.println("网页加载结束");
-
             }
 
             // 所有链接跳转会走此方法
