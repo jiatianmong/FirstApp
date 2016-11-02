@@ -312,6 +312,9 @@ public class NewsTabPager extends BasePager implements SwipeRefreshLayout.OnRefr
 
                 Intent intent = new Intent(mActivity, NewsDetailActivity.class);
                 intent.putExtra("url", mNewsMenu.result.data.get(position).url);
+                intent.putExtra("title_url", mNewsMenu.result.data.get(position).title);
+                intent.putExtra("thumbnail_pic_s_url", mNewsMenu.result.data.get(position).thumbnail_pic_s);
+
                 mActivity.startActivity(intent);
 
             }

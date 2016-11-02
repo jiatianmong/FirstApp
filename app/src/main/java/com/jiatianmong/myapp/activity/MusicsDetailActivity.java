@@ -76,7 +76,7 @@ public class MusicsDetailActivity extends Activity implements OnClickListener {
         switch (v.getId()) {
             case R.id.btn_back:
                 //
-                finish();
+                //finish();
                 break;
             case R.id.btn_size:
                 // 修改网页字体大小

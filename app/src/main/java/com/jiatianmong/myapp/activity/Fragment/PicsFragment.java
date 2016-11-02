@@ -127,7 +127,7 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         //返回数据
                         String result = responseInfo.result;
                         //解析数据
-                        //System.out.println("result"+result);
+                        System.out.println("result"+result);
                         processJsonData(result);
                         FileService.saveContentToSdcard(result,find_content);
                         System.out.println("设置缓存");
@@ -179,6 +179,7 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 //                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(mActivity, PicssDetailActivity.class);
                 intent.putExtra("picsurl", mPicsMenu.data.get(position).middleURL);
+                //intent.putExtra("picsurl", mPicsMenu.data.get(position).replaceUrl.get(1).ObjURL);
                 mActivity.startActivity(intent);
 
             }

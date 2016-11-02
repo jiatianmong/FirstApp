@@ -55,20 +55,23 @@ public class PicsMenu {
 
 
 		public ArrayList<REPLACEURL> replaceUrl;
-	}
+		public  class REPLACEURL {
+			public String FromURL;
+			public String ObjURL;
 
-	private class REPLACEURL {
-		public String FromURL;
-		public String ObjURL;
-
-		@Override
-		public String toString() {
-			return "REPLACEURL{" +
-					"FromURL='" + FromURL + '\'' +
-					", ObjURL='" + ObjURL + '\'' +
-					'}';
+			@Override
+			public String toString() {
+				return "REPLACEURL{" +
+						"FromURL='" + FromURL + '\'' +
+						", ObjURL='" + ObjURL + '\'' +
+						'}';
+			}
 		}
+
+
 	}
+
+
 
 	public String simid;
 	public String ObjURL;
