@@ -36,6 +36,7 @@
 		          android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
 		<activity android:name=".activity.NewsDetailActivity"/>
 		<activity android:name=".activity.PicssDetailActivity"/>
+		<activity android:name=".activity.MoviesDetailActivity"/>
 
 		<activity
 			android:name="com.mob.tools.MobUIShell"

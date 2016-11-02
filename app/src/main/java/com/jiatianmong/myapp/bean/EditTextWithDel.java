@@ -86,4 +86,5 @@ public class EditTextWithDel extends EditText {
     protected void finalize() throws Throwable {
         super.finalize();
     }
+
 }

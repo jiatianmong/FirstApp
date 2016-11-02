@@ -2,11 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="#fff"
               android:orientation="vertical">
-	<com.jiatianmong.myapp.utils.ProgressWebView
-		android:id="@+id/wv_movies"
+	<RelativeLayout
 		android:layout_width="match_parent"
-		android:layout_alignParentTop="true"
-		android:layout_centerHorizontal="true"
-		android:layout_height="match_parent"/>
+		android:layout_height="50dp"
+		android:background="#f9d442">
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true"
+			android:text="电影网站列表"
+			android:textSize="25dp"/>
+	</RelativeLayout>
+	<GridView
+		android:id="@+id/gv_home"
+		android:layout_margin="10dp"
+		android:paddingTop="20dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:numColumns="3"
+		android:verticalSpacing="15dp">
+	</GridView>
 </LinearLayout>

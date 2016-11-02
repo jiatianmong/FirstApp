@@ -69,6 +69,7 @@ public class PicsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         return view;
     }
 
+
     private void mBtEnterLister() {
         mBtEnter.setOnClickListener(new View.OnClickListener() {
             @Override

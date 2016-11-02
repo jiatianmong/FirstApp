@@ -42,6 +42,8 @@ public class MainActivity extends SlidingFragmentActivity {
         initSlidingMenu();
 
         init_fragment();
+
+
     }
 
     //伸缩模式
@@ -95,18 +97,19 @@ public class MainActivity extends SlidingFragmentActivity {
         if (mMusicsFragment == null) {
             mMusicsFragment = new MusicsFragment();
         }
-        mFragmentTransaction.add(R.id.fl_main, mMusicsFragment, TAG_PIC);
+        mFragmentTransaction.add(R.id.fl_main, mMusicsFragment, TAG_MUSIC);
 
-        if (mMoviesFragment == null) {
-            mMoviesFragment = new MoviesFragment();
-        }
-        mFragmentTransaction.add(R.id.fl_main, mMoviesFragment, TAG_PIC);
 
 
         if (mNewsFragment == null) {
             mNewsFragment = new NewsFragment();
         }
         mFragmentTransaction.add(R.id.fl_main, mNewsFragment, TAG_NEW);
+
+        if (mMoviesFragment == null) {
+            mMoviesFragment = new MoviesFragment();
+        }
+        mFragmentTransaction.add(R.id.fl_main, mMoviesFragment, TAG_MOVIE);
 
         mFragmentTransaction.commit();
 
@@ -174,7 +177,6 @@ public class MainActivity extends SlidingFragmentActivity {
             transaction.hide(mPicsFragment);
         }
     }
-
 
 
 
